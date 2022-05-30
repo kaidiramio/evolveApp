@@ -1,6 +1,6 @@
 ## EvolveApp
 
-![evolve](https://j.gifs.com/A672V9.gif)
+![evolve](https://j.gifs.com/Qkq2wG.gif)
 
 <!-- older gif will need to update eventually -->
 
@@ -19,3 +19,4 @@ Techology used: HTML, CSS, JavaScript, Node, Express, EJS template, MongoDB.
 
 1. run `npm run evolve`
 2. Navigate to `localhost:3040`
+3. Login: username `admin@admin.com` ; password `admin`
