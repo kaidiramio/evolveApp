@@ -1,6 +1,6 @@
 ## EvolveApp
 
-![evolve](https://j.gifs.com/A672V9.gif)
+![evolve](https://gifs.com/gif/evolveapp-A672V9)
 
 <!-- older gif will need to update eventually -->
 
