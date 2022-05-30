@@ -1,0 +1,110 @@
+body{
+  /* padding-top:80px; */
+  word-wrap:break-word;
+  height: 1000px;
+
+}
+
+h3{
+  font-size: 1.2rem;
+}
+
+img{
+  height: 200px;
+}
+
+/* profile page CSS */
+.emailShow{
+  width: 75%;
+  margin-bottom: 15px;
+}
+.msgs{
+  height: 60px;
+  width: 75%;
+  display: block;
+}
+
+#profile_pic{
+  background: white;
+}
+
+.headingThree{
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+}
+
+form{
+  margin-top: 20px;
+}
+
+.labelEmail{
+  display: block;
+}
+
+.add{
+  margin-top: 10px;
+}
+
+.well{
+  height: 500px;
+  width: 100%;
+  background: lightblue;
+}
+
+input{
+  border: 1px lightcyan solid;
+  box-shadow: 2px 2px 2px 2px ;
+}
+
+.col-sm-8{
+  display:none;
+}
+
+p{
+  margin-top: 25px;
+}
+
+.item{
+  padding-top: 20px;
+}
+
+.btn-default{
+  margin-top: 20px;
+
+}
+
+.message{
+  font-size: 2rem;
+  list-style: none;
+  list-style: outside, none;
+}
+
+li {
+  background-image: url("https://cdn.pixabay.com/photo/2013/07/12/14/11/note-147951__340.png");
+  background-size: cover;
+  background-position: center center;
+  height: 200px;
+  /* border: 2px solid #c6cebf; */
+  border-radius: 5%;
+  
+  color: black;
+  font-size: 1rem;
+  
+  padding: 10%;
+
+  overflow: hidden;
+
+  margin: 2%;
+  
+}
+
+ul.messages{
+  display: grid;
+  grid-template-columns: repeat(3, 80%);
+  width: 75%;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* will work on displaying the messages text inline-block */
