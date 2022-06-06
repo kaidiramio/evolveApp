@@ -1,25 +1,23 @@
-let smile = document.getElementsByClassName("fa fa-smile-o");
-let trash = document.getElementsByClassName("fa fa-trash");
+const trash = document.querySelectorAll(".fa-trash");
+const pencil = document.querySelectorAll(".fa-pencil-square-o");
+// const update = document.querySelectorAll(".updateDoc");
 
-// affirmations.js
-Array.from(smile).forEach(function(element) {
+
+Array.from(trash).forEach(function(element) {
   element.addEventListener('click', function(){
-    const name = this.parentNode.parentNode.childNodes[1].innerText
-    const msg = this.parentNode.parentNode.childNodes[3].innerText
-    const smile = parseFloat(this.parentNode.parentNode.childNodes[5].innerText)
-    fetch('messages', {
-      method: 'put',
-      headers: {'Content-Type': 'application/json'},
+    // console.log(this.parentNode.parentNode.childNodes[5].innerText)
+
+    const intentionId = this.parentNode.parentNode.id
+
+    fetch('intention-delete', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
-        'name': name,
-        'msg': msg,
-        'smile':smile
+          '_id': intentionId
       })
-    })
-    .then(response => {
-      if (response.ok) return response.json()
-    })
-    .then(data => {
+    }) .then(data => {
       console.log(data)
       window.location.reload(true)
     })
@@ -27,25 +25,11 @@ Array.from(smile).forEach(function(element) {
 });
 
 
-Array.from(trash).forEach(function(element) {
-      element.addEventListener('click', function(){
-        const name = this.parentNode.parentNode.childNodes[1].innerText
-        const msg = this.parentNode.parentNode.childNodes[3].innerText
-        fetch('messages', {
-          method: 'delete',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            'name': name,
-            'msg': msg
-          })
-        }).then(function (response) {
-          window.location.reload()
-        })
-      });
+Array.from(pencil).forEach(function(element) {
+  element.addEventListener('click', function(){
+
+    const editForm = this.parentNode.parentNode.childNodes[14]
+
+    editForm.classList.toggle('popUp')
+  });
 });
-
-
-// profile.js
-

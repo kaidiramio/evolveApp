@@ -11,16 +11,18 @@
 <div class="container">
 
     <div class="page-header text-center">
-        <h1><span class="fa fa-user"></span> My Profile</h1>
-        <a href="/affirmations" class="btn btn-default btn-sm">My Affirmations</a>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        <h1><span class="fa fa-user"></span> My Account</h1>
+        <a href="/affirmations" class="btn btn-default btn-sm"><i class="fa fa-hand-peace-o" aria-hidden="true"></i> Affirmations</a>
+        <a href="/reflect" class="btn btn-default btn-sm"><i class="fa fa-commenting-o" aria-hidden="true"></i> Reflect</a>
+        <a href="/logout" class="btn btn-default btn-sm"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
     </div>
 
     <div class="row">
 
         <!-- LOCAL INFORMATION -->
         <div class="col-sm-6">
-            <div class="well">
+            <div class="well new">
+
                 <h3 class="profilePic"><label for="profile_pic">Choose a profile picture:</label>
                   <input type="file" id="profile_pic" name="profile_pic" accept=".jpg, .jpeg, .png">
                 </h3>
@@ -41,35 +43,6 @@
 
             </div>
         </div>
-        <div class="col-sm-6">
-          <div class="well">
-              <h3 class="headingThree"> Rate your mood!</h3>
-              <% if (user.local.email) { %>
-                <form action="/messagesMood" method="POST">
-                  <label for="time">Time:</label>
-                  <input type="time" id="timeOfMood" name="time">
-                  <p>Current Date is <input id="date" type="date" name ="date">.</p>
-                  <label class="message" for="message">How are you feeling?</label>
-                  <input class="msgs" type="text" placeholder="Enter message here" name="msg">
-                  <button class="add" type="submit">Submit</button>
-              </form>
-          </div>
-      </div>
-      <div class="col-sm-6" id="second">
-        <h3>Messages</h3>
-        
-        <ul class="messages">
-          <% for(var i=0; i<mood.length; i++) {%>
-            <li class="message">
-              <span><%= mood[i].date %></span>
-              <!-- <span><%= mood[i].time %></span> -->
-              <span><%= mood[i].msg %></span>
-            </li>
-          <% } %>
-        </ul>
-
-      </div>
-      <% } %>
     </div>
 
 

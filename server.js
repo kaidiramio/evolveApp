@@ -5,7 +5,7 @@
 //All of these files are helping to build up separation of concerns so that its easier to track its parts.
 const express  = require('express');
 const app      = express();
-const port     = process.env.PORT || 3040;//port is here in case Heroku wants to use a diff port
+const port     = process.env.PORT || 6040;//port is here in case Heroku wants to use a diff port
 
 const MongoClient = require('mongodb').MongoClient
 const mongoose = require('mongoose');//Another way of connecting to the database

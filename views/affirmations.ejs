@@ -1,6 +1,6 @@
-<!-- users saved affirmations page -->
 <!doctype html>
 <html>
+  <!-- I need to css the edit inputs a bit more -->
 <head>
     <title>Evolve App</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
@@ -9,50 +9,111 @@
     <link rel="stylesheet" href="font-awesome.min.css">
 </head>
 <body>
-<div class="container">
-
-    <div class="page-header text-center">
-        <h1><span class="fa fa-user"></span> My Affirmations</h1>
-        <a href="/profile" class="btn btn-default btn-sm">Profile</a>
+  <section class="container">
+    <div id="pageH" class="page-header text-center">
+      <h1><i class="fa fa-hand-peace-o" aria-hidden="true"></i> Affirmations</h1>
+      <a href="/profile" class="btn btn-default btn-sm"><i class="fa fa-user" aria-hidden="true"></i> Account</a>
+      <a href="/reflect" class="btn btn-default btn-sm"><i class="fa fa-commenting-o" aria-hidden="true"></i> Reflect</a>
+      <!-- <a href="/dailyRituals" class="btn btn-default btn-sm"><i class="fa fa-sun-o" aria-hidden="true"></i> Daily Rituals</a> -->
+      <a href="/logout" class="btn btn-default btn-sm"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
     </div>
+    <section class="container">
+      <section class="row">
+          <!-- LOCAL INFORMATION -->
+          <section class="col-sm-6 affirm">
+              <section class="well intents">
 
-    <div class="row">
+                      <a href="/profile"><button>Profile</button></a>
+                      <hr>
 
-        <div class="col-sm-6">
-            <div class="well">
-                <h3 class="headingThree">Drop an affirmation or add one of your favorite quotes!</h3>
+                      <h1 class="headingThree">Set your intention for the day or week!</h1>
+                      <p>Type in your own intention for the week and save it or click the <em>Get Intention</em> button to recieve one!</p>
+
+                      <% if (user.local.email) { %>
+                        <form action="/intentionForm" method="POST">
+                          <label for="date">Today's Date is:
+                          <input type="date" class="emailShow" name="date" placeholder="Today's Date"></label>
+
+                          <label for="intention">My intention today is:
+                          <input type="text" class="emailShow" name="name" placeholder="Intention Message"></label>
+
+                          <label for="date">How I am feeling today:
+                          <input type="text" class="emailShow" name="note" placeholder="Mood Updates"></label>
+
+
+                          <button class="add" type="submit">Submit</button>
+        
+                        <br>OR <br>
+                        </form>
+                        <p><button id="getIntention" type="submit">GET</button></p>
+        
+                        <h3 id="displayIntent"></h3>
+        
+                    <% } %>
+              </section>
+              <!-- <section class="well intents">
                 <% if (user.local.email) { %>
-                  <form action="/messages" method="POST">
-                    <label for="email">Enter Name or Email</label>
-                    <input class="emailShow" type="text" value="<%= user.local.email %>" placeholder="Name" name="name">
-                  
-                    <label class="message" for="message">Add your message</label>
-                    <input class="msgs" type="text" placeholder="Enter message here" name="msg">
-                    <button class="add" type="submit">Add Affirmation</button>
-                </form>
-            </div>
-        </div>
-        <div class="col-sm-6" id="second">
-          <h3>Messages</h3>
+                    <form action="/intentionForm" method="POST">
+                      <input type="date" class="info date" name="date" placeholder="Today's Date">
+                      <input type="text" class="info name" name="name" placeholder="Intention Message">
+                      <input type="text" class="info note" name="note" placeholder="Mood Updates">
+                      <button type="submit">Submit</button>
+    
+                    <br>OR <br>
+                    </form>
+                    <p><button id="getIntention" type="submit">GET</button></p>
+    
+                    <h3 id="displayIntent"></h3>
+    
+                <% } %>
+    
+              </section> -->
+          </section>
+      </section>
+      
+    </section>
+
+    <section class="row">
+        <h3 id="feeling">My intentions</h3>
+        
+        <section class="col-sm-6" id="second">
+          <ul class="messages mood">
+          <% for(var i=0; i<intentionRecord.length; i++) {%>
           
-          <ul class="messages">
-            <% for(var i=0; i<messages.length; i++) {%>
-              <li class="message">
-                <span><%= messages[i].name %></span>
-                <span><%= messages[i].msg %></span>
-                <span><%= messages[i].smile %></span>
-                <span><i class="fa fa-smile-o" aria-hidden="true">Reviewed</i></span>
-                <span><i class="fa fa-trash" aria-hidden="true"></i></span>
-              </li>
-            <% } %>
+            <li class="message reflecAff" id="<%= intentionRecord[i]._id %>">
+              <p>Date:</p><span class="record date" ><%= intentionRecord[i].date %></span>
+              <p>Intention:</p><span class="record name" ><%= intentionRecord[i].name %></span>
+              <p>Notes:</p><span class="record note" ><%= intentionRecord[i].note %></span>
+              <span><i class="fa fa-trash" aria-hidden="true"></i></span>
+              <span><i class="fa fa-pencil-square-o" aria-hidden="true">Edit</i></span>
+              
+            
+                <form action="/edit" method="POST" class="popUp">
+                  <input type="hidden" name="msgId" value="<%= intentionRecord[i]._id %>" >
+
+                  <label class="record">Date:
+                  <input type="date" class="record" name="date" placeholder="Today's Date" value="<%= intentionRecord[i].date %>" ></label>
+
+                  <label class="record">Intention:
+                  <input type="text" class="record" name="name" placeholder="My Intention" value="<%= intentionRecord[i].name %>" ></label>
+
+                  <label class="record">Note:
+                  <input type="text" class="record" name="note" placeholder="Notes" value="<%= intentionRecord[i].note %>" ></label>
+
+                  <button type="submit" class="updateRec">Submit</button>
+                </form>
+    
+            </li>
+          
+          <% } %>
           </ul>
+    </section>
+  </section>
+  </section>
+        
 
-        </div>
-        <% } %>
-    </div>
 
-</div>
-
+<script src="affirmationRandom.js"></script>
 <script src="main.js"></script>
 
 </body>

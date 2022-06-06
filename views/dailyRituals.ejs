@@ -1,0 +1,123 @@
+<!-- <!doctype html>
+<html>
+<head>
+    <title>Evolve App</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="font-awesome.min.css">
+</head>
+<body id="reflectionPageBody">
+<div class="container">
+
+    <div class="page-header text-center">
+        <h1><span><i class="fa fa-sun-o" aria-hidden="true"></i></span>
+            Daily Rituals</h1>
+        <a href="/affirmations" class="btn btn-default btn-sm"><i class="fa fa-headphones" aria-hidden="true"></i> Affirmations</a>
+        <a href="/reflect" class="btn btn-default btn-sm"><i class="fa fa-commenting-o" aria-hidden="true"></i> Reflect</a>
+        <a href="/profile" class="btn btn-default btn-sm"><i class="fa fa-user" aria-hidden="true"></i> Account</a>
+        <a href="/logout" class="btn btn-default btn-sm" >Logout</a>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 affirm">
+            <div class="well intents">
+                <h3 class="headingThree">Daily Rituals</h3>
+                <p>Track your daily ritual progess here!</p>
+                <% for(let i=0; i<rituals.length; i++) {
+                    if (rituals[i].complete === false) { %>
+                        <section id="<%=rituals[i]._id%>">
+                            <section id="<%=rituals[i].complete%>">
+                                <form action="/dailyRitual" method="POST">
+                                    <input type="date"> 
+
+                                    <label class="message" for="message">I worked out today or walked</label>
+                                    <input type="checkbox" name="workout" value="false">
+
+                                    <label class="message" for="message">I meditated today.</label>
+                                    <input type="checkbox" name="meditate" value="false">
+
+                                    <label class="message" for="message">I stay hydrated today.</label>
+                                    <input type="checkbox" name="hydrate" value="false">
+
+                                    <label class="message" for="message">I got a stretch in today.</label>
+                                    <input type="checkbox" name="stretch" value="false">
+
+                                    <label class="message" for="message">I set my morning intention.</label>
+                                    <input type="checkbox" name="setIntentions" value="false">
+
+                                    <label class="message" for="message">I did something I enjoy today.</label>
+                                    <input type="checkbox" name="fun" value="false">
+
+                                    <label class="message" for="message">I was compassionate towards myself today.</label>
+                                    <input type="checkbox" name="kind" value="false">
+
+                                    <label class="message" for="message">I was able to talk to someone today.</label>
+                                    <input type="checkbox" name="spoke" value="false">
+
+                                    <label class="message" for="message">I showered today.</label>
+                                    <input type="checkbox" name="showered" value="false">
+
+                                    <p><button class="add" type="submit">Submit</button></p> 
+
+                                    <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                    <span><i  class="fa fa-trash-o" aria-hidden="true"></i></span>
+            
+                                </form>
+                            </section>
+                        </section>
+                </div>
+            </div>
+
+            <div class="well intents">
+                <h3 class="headingThree">Completed</h3>
+                <p>You're doing great!</p>
+                <% for(let i=0; i<rituals.length; i++) {
+                    if (rituals[i].complete === true) { %>
+                        <section id="<%=rituals[i]._id%>">
+                            <section id="<%=rituals[i].complete%>">
+                                <form action="/dailyRitual" method="POST">
+                                    <input type="date"> 
+
+                                    <label class="message" for="message">I worked out today or walked</label>
+                                    <input type="checkbox" name="workout" value="false">
+
+                                    <label class="message" for="message">I meditated today.</label>
+                                    <input type="checkbox" name="meditate" value="false">
+
+                                    <label class="message" for="message">I stay hydrated today.</label>
+                                    <input type="checkbox" name="hydrate" value="false">
+
+                                    <label class="message" for="message">I got a stretch in today.</label>
+                                    <input type="checkbox" name="stretch" value="false">
+
+                                    <label class="message" for="message">I set my morning intention.</label>
+                                    <input type="checkbox" name="setIntentions" value="false">
+
+                                    <label class="message" for="message">I did something I enjoy today.</label>
+                                    <input type="checkbox" name="fun" value="false">
+
+                                    <label class="message" for="message">I was compassionate towards myself today.</label>
+                                    <input type="checkbox" name="kind" value="false">
+
+                                    <label class="message" for="message">I was able to talk to someone today.</label>
+                                    <input type="checkbox" name="spoke" value="false">
+
+                                    <label class="message" for="message">I showered today.</label>
+                                    <input type="checkbox" name="showered" value="false">
+
+                                    <p><button class="add" type="submit">Submit</button></p> 
+
+                                    <span><i class="fa fa-check" aria-hidden="true"></i></span>
+                                    <span><i  class="fa fa-trash-o" aria-hidden="true"></i></span>
+                                   
+                                </form>
+                            </section>
+                        </section>
+                </div>
+            </div>
+</div>
+
+<script src="main.js"></script>
+
+</body>
+</html> -->

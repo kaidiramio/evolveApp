@@ -1,5 +1,8 @@
 module.exports = function(app, passport, db) {
 
+
+  const { ObjectId } = require('mongodb') //gives access to _id in mongodb
+
 // normal routes ===============================================================
 
     // show the home page (will also have our login links)
@@ -22,25 +25,52 @@ module.exports = function(app, passport, db) {
 
     // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
-        db.collection('messagesMood').find().toArray((err, result) => {
+        db.collection('profilePage').find().toArray((err, result) => {
           if (err) return console.log(err)
           res.render('profile.ejs', {
             user : req.user,
-            mood: result
+            // mood: result
           })
         })
     });
     
-     // AFFIRMATION SECTION =========================
-     app.get('/affirmations', function(req, res) {
-      db.collection('messages').find().toArray((err, result) => {
-        if (err) return console.log(err)
-        res.render('affirmations.ejs', {
-          user : req.user,
-          messages: result
-        })
+// AFFIRMATION SECTION =========================
+
+app.get("/affirmations", isLoggedIn, function (req, res) {
+  db.collection('intentions')
+    .find()
+    .toArray((err, result) => {
+      if (err) return console.log(err);
+      res.render("affirmations.ejs", {
+        user : req.user,
+        intentionRecord: result,
+      });
+    });
+});
+
+
+   // REFLECT SECTION =========================
+   app.get('/reflect', function(req, res) {
+    db.collection('messagesMood').find().toArray((err, result) => {
+      if (err) return console.log(err)
+      res.render('reflect.ejs', {
+        user : req.user,
+        mood: result
       })
+    })
   });
+
+
+  // Daily ritual SECTION =========================
+  app.get('/dailyRituals', function(req, res) {
+    db.collection('dailyRituals').find().toArray((err, result) => {
+      if (err) return console.log(err)
+      res.render('dailyRituals.ejs', {
+        user : req.user,
+        // rituals: result
+      })
+    })
+  }); 
 
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
@@ -50,63 +80,134 @@ module.exports = function(app, passport, db) {
 
 // message board AFFIRMATION PAGE routes ===============================================================
 
-    app.post('/messages', (req, res) => {
-      db.collection('messages').save({name: req.body.name, msg: req.body.msg, smile: 0}, (err, result) => {
-        if (err) return console.log(err)
-        console.log('saved to database')
-        res.redirect('/affirmations')
-      })
-    })
+app.post("/intentionForm", isLoggedIn, (req, res) => {
+  db.collection('intentions').insertOne(
+    // { 
+    //   _id: ObjectId( req.body.msgId)
+    // },
+    { 
+      // userID: req.user,
+      date: req.body.date,
+      name: req.body.name,
+      note: req.body.note 
+    },
+    (err, result) => {
+      if (err) return console.log(err);
+      console.log("saved to Mongo DB");
+      res.redirect("/affirmations");
+    }
+  )
+});
 
-    app.put('/messages', (req, res) => {
-      db.collection('messages')
-      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-        $set: {
-          smile:req.body.smile + 1,
-        }
-      }, {
-        sort: {_id: -1},
-        upsert: true
-      }, (err, result) => {
-        if (err) return res.send(err)
-        res.send(result)
-      })
-    })
+// EDIT POST
+app.post("/edit", isLoggedIn, (req, res) => {
+  db.collection('intentions').findOneAndUpdate(
+      { 
+        _id: ObjectId( req.body.msgId)
+      },
+      { $set: {
+          date: req.body.date,
+          name: req.body.name,
+          note: req.body.note,
+      }   
+  },
+  {
+      sort: {_id: -1},  
+      upsert: false
+  }, (err, result) => {
+      if (err) return res.send(err)
+      res.redirect("/affirmations")        
+  })
+});  
 
-    // message board PROFILE PAGE (MOOD)routes ===============================================================
+// DELETE
 
+app.delete('/intention-delete', isLoggedIn, (req, res) => {
+  db.collection('intentions').findOneAndDelete(
+    {
+      _id: ObjectId( req.body._id)
+      }, 
+      (err, result) => {
+    if (err) return res.send(500, err)
+    res.send('Your Intention has been deleted!')
+  }) 
+})
+
+// message board REFLECT PAGE routes ===============================================================
     app.post('/messagesMood', (req, res) => {
       db.collection('messagesMood').save({date: req.body.date, time: req.body.time, msg: req.body.msg}, (err, result) => {
         if (err) return console.log(err)
          console.log('saved to database')
-        res.redirect('/profile')
+        res.redirect('/reflect')
       })
     })
 
-    app.post('/profile', (req, res) => {
+    app.post('/reflect', (req, res) => {
       db.collection('messagesMood').insertOne({date: req.body.date, time: req.body.time, msg: req.body.msg}, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
-        res.redirect('/')
+        res.redirect('/reflect')
       })
     })
 
-    app.delete('/delete', (req, res) => {
-      db.collection('messagesMood').findOneAndDelete({_id: new mongoose.mongo.ObjectID(req.body.id)}, (err, result) => {
+    app.delete('/mood-delete', isLoggedIn, (req, res) => {
+      db.collection('messagesMood').findOneAndDelete(
+        {
+          _id: ObjectId( req.body._id)
+          }, 
+          (err, result) => {
         if (err) return res.send(500, err)
-        res.send('Message deleted!')
-      })
+        res.send('Your Intention has been deleted!')
+      }) 
     })
 
 
-    // affirmation page delete
 
-    app.delete('/messages', (req, res) => {
-      db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
-        if (err) return res.send(500, err)
-        res.send('Message deleted!')
-      })
-    })
+    // ***********MESSAGE BOARD DAILY RITUALS (not functional right now was just playing around) **********
+
+    // app.put('/addChecked', (req, res) => {
+    //   db.collection(collectionName)
+    //   .findOneAndUpdate({ _id: ObjectId(req.body.postObjectID)}, 
+    //   {
+    //     $set: {
+    //       complete: true,
+    //       thisUser: req.user.local.firstName
+    //     }
+    //   },
+    //    {
+    //     sort: {_id: -1}, //Sorts documents in db ascending (1) or descending (-1)
+    //     upsert: true
+    //   }, (err, result) => {
+    //     if (err) return res.send(err)
+    //     res.send(result)
+    //   })
+    // })
+
+    // app.put('/removeChecked', (req, res) => {
+    //   db.collection(collectionName)
+    //   .findOneAndUpdate({ _id: ObjectId(req.body.postObjectID)}, 
+    //   {
+    //     $set: {
+    //       complete: false,
+
+    //     }
+    //   },
+    //    {
+    //     sort: {_id: -1}, //Sorts documents in db ascending (1) or descending (-1)
+    //     upsert: true
+    //   }, (err, result) => {
+    //     if (err) return res.send(err)
+    //     res.send(result)
+    //   })
+    // })
+
+
+    // app.delete('/deleteOrder', (req, res) => {
+    //   db.collection(collectionName).findOneAndDelete({ _id: ObjectId(req.body.postObjectID)}, (err, result) => {
+    //     if (err) return res.send(500, err)
+    //     res.send('Message deleted!')
+    //   })
+    // })
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) don't touch this and sign up ==================================================

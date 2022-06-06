@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+    <title>Evolve App</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="font-awesome.min.css">
+</head>
+<body id="reflectionPageBody">
+<div class="container">
+
+    <div class="page-header text-center">
+        <h1><span class="fa fa-commenting-o"></span> My Reflections</h1>
+        <a href="/affirmations" class="btn btn-default btn-sm"><i class="fa fa-hand-peace-o" aria-hidden="true"></i> Affirmations</a>
+        <!-- <a href="/dailyRituals" class="btn btn-default btn-sm"><span><i class="fa fa-sun-o" aria-hidden="true"></i></span> Daily Rituals</a> -->
+        <a href="/profile" class="btn btn-default btn-sm"><i class="fa fa-user" aria-hidden="true"></i> Account</a>
+        <a href="/logout" class="btn btn-default btn-sm"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
+    </div>
+
+    <div class="row">
+
+        <!-- LOCAL INFORMATION -->
+        <div class="col-sm-6 checkin">
+          <div class="well check">
+              <h3 class="headingThree"> Check-ins!</h3>
+              <p>What would you like to check in on right now?</p>
+              <% if (user.local.email) { %>
+                <form action="/messagesMood" method="POST">
+                <div class="reflectLable">
+                  <label class="message" for="time">Time</label>
+                  <input type="time" id="timeOfMood" name="time">
+                </div>
+                <div class="reflectLable">
+                  <label class="message" for="date">Date</label>
+                  <span>Today is: <input id="date" type="date" name ="date"></span>
+                </div>
+                <div class="reflectLable">
+                  <label class="message" for="message">How are you feeling?</label>
+                  <input class="msgs" type="text" maxlength="145" placeholder="Enter message here" name="msg">
+                  <!-- <textarea name="msg" placeholder="Enter message here" maxlength="145" cols="20" rows="5"></textarea> -->
+                  <p class="italic">MAX characters 145</p>
+                  <button class="add" type="submit">ADD</button>
+                </div>
+              </form>
+          </div>
+      </div>
+      <div class="col-sm-6" id="second">
+        <h3 id="feeling">Your Entries</h3>
+        
+        <ul class="messages mood">
+          <% for(var i=0; i<mood.length; i++) {%>
+            <li class="message reflects" id="<%= mood[i]._id %>">
+              <span class="itemMinus"><i class="fa fa-times" aria-hidden="true"></i></span>
+              <span class="itemz"><%= mood[i].date %></span>
+              <!-- <span><%= mood[i].time %></span> -->
+              <span class="itemz" ><%= mood[i].msg %></span>
+            </li>
+          <% } %>
+        </ul>
+
+      </div>
+      <% } %>
+    </div>
+
+
+</div>
+
+<script src="reflect.js"></script>
+<!-- <script src="main.js"></script> -->
+
+</body>
+</html>
